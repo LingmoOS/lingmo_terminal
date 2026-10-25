@@ -36,7 +36,7 @@ target_compile_definitions(terminal-core PRIVATE
 )
 target_link_libraries(terminal-core
     PUBLIC
-        Lingmo::ToolkitBase
+        Lingmo::SDKBase
     PRIVATE
         PkgConfig::ICU
         PkgConfig::PCRE2
@@ -51,7 +51,7 @@ add_library(terminal-view STATIC
 target_link_libraries(terminal-view
     PUBLIC
         terminal-core
-        Lingmo::Toolkit
+        Lingmo::SDK
     PRIVATE
         PkgConfig::ICU
         PkgConfig::XKBCOMMON

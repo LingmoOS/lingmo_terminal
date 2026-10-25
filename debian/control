@@ -14,7 +14,7 @@ Homepage: https://github.com/lingmoos/terminal
 
 Package: lingmo-terminal
 Architecture: any
-Depends: lingmo-sdk,
+Depends: lingmo-sdk-dev,
          ${misc:Depends},
          ${shlibs:Depends}
 Description: Lingmo OS Terminal

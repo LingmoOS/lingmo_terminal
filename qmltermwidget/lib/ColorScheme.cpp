@@ -448,7 +448,7 @@ void ColorScheme::readColorEntry(Lingmo::base::Settings * s , int index)
 
     if (!ok)
     {
-        CF_WARNING(qtermwidgetLogger) << "Invalid color value" << colorStr << "for" << colorName << ". Fallback to black.";
+        LM_WARNING(qtermwidgetLogger) << "Invalid color value" << colorStr << "for" << colorName << ". Fallback to black.";
         r = g = b = 0;
     }
     entry.color = Color{uint8_t(r), uint8_t(g), uint8_t(b)};
@@ -581,7 +581,7 @@ void ColorSchemeManager::loadAllColorSchemes()
     }
 
     if ( failed > 0 )
-        CF_DEBUG(qtermwidgetLogger) << "failed to load " << failed << " color schemes.";
+        LM_DEBUG(qtermwidgetLogger) << "failed to load " << failed << " color schemes.";
 
     _haveLoadedAll = true;
 }

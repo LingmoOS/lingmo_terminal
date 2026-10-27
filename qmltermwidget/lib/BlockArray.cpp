@@ -139,7 +139,7 @@ const Block * BlockArray::at(size_t i)
     }
 
     if (i > index) {
-        CF_DEBUG(qtermwidgetLogger) << "BlockArray::at() i > index\n";
+        LM_DEBUG(qtermwidgetLogger) << "BlockArray::at() i > index\n";
         return nullptr;
     }
 

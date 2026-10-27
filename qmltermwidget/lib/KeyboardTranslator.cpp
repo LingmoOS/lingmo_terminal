@@ -112,14 +112,14 @@ const KeyboardTranslator* KeyboardTranslatorManager::findTranslator(const std::s
     if ( translator != nullptr )
         _translators[name] = translator;
     else if ( !name.empty() )
-        CF_DEBUG(qtermwidgetLogger) << "Unable to load translator" << name;
+        LM_DEBUG(qtermwidgetLogger) << "Unable to load translator" << name;
 
     return translator;
 }
 
 bool KeyboardTranslatorManager::saveTranslator(const KeyboardTranslator* translator)
 {
-CF_DEBUG(qtermwidgetLogger) << "KeyboardTranslatorManager::saveTranslator" << "unimplemented";
+LM_DEBUG(qtermwidgetLogger) << "KeyboardTranslatorManager::saveTranslator" << "unimplemented";
 (void)translator;
     return true;
 }
@@ -280,7 +280,7 @@ void KeyboardTranslatorReader::readNext()
             {
                 // identify command
                 if (!parseAsCommand(tokens[2].text,command))
-                    CF_DEBUG(qtermwidgetLogger) << "Command" << tokens[2].text << "not understood.";
+                    LM_DEBUG(qtermwidgetLogger) << "Command" << tokens[2].text << "not understood.";
             }
 
             KeyboardTranslator::Entry newEntry;
@@ -402,7 +402,7 @@ bool KeyboardTranslatorReader::decodeSequence(const std::string& utf8Text,
             else if ( parseAsKeyCode(item,itemKeyCode) )
                 keyCode = itemKeyCode;
             else
-                CF_DEBUG(qtermwidgetLogger) << "Unable to parse key binding item:" << item;
+                LM_DEBUG(qtermwidgetLogger) << "Unable to parse key binding item:" << item;
 
             buffer.clear();
         }
@@ -588,7 +588,7 @@ std::vector<KeyboardTranslatorReader::Token> KeyboardTranslatorReader::tokenize(
     }
     else
     {
-        CF_DEBUG(qtermwidgetLogger) << "Line in keyboard translator file could not be understood:" << strings::utf16ToUtf8(text);
+        LM_DEBUG(qtermwidgetLogger) << "Line in keyboard translator file could not be understood:" << strings::utf16ToUtf8(text);
     }
 
     return list;
@@ -927,7 +927,7 @@ void KeyboardTranslatorManager::addTranslator(KeyboardTranslator* translator)
     _translators.insert_or_assign(translator->name(),translator);
 
     if ( !saveTranslator(translator) )
-        CF_DEBUG(qtermwidgetLogger) << "Unable to save translator" << translator->name()
+        LM_DEBUG(qtermwidgetLogger) << "Unable to save translator" << translator->name()
                    << "to disk.";
 }
 bool KeyboardTranslatorManager::deleteTranslator(const std::string& name)
@@ -944,7 +944,7 @@ bool KeyboardTranslatorManager::deleteTranslator(const std::string& name)
     }
     else
     {
-        CF_DEBUG(qtermwidgetLogger) << "Failed to remove translator - " << path;
+        LM_DEBUG(qtermwidgetLogger) << "Failed to remove translator - " << path;
         return false;
     }
 }

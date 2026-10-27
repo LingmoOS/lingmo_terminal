@@ -510,7 +510,7 @@ uint ExtendedCharTable::createExtendedChar(uint* unicodePoints , ushort length)
                 }
                 else
                 {
-                    CF_WARNING(qtermwidgetLogger) << "Using all the extended char hashes, going to miss this extended character";
+                    LM_WARNING(qtermwidgetLogger) << "Using all the extended char hashes, going to miss this extended character";
                     return 0;
                 }
             }

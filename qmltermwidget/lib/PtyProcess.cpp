@@ -35,11 +35,11 @@ PtyProcess::PtyProcess()
 {
     _master = ::posix_openpt(O_RDWR | O_NOCTTY | O_CLOEXEC);
     if (_master < 0) {
-        CF_WARNING(qtermwidgetLogger) << "Can't open a pseudo teletype";
+        LM_WARNING(qtermwidgetLogger) << "Can't open a pseudo teletype";
         return;
     }
     if (grantpt(_master) != 0 || unlockpt(_master) != 0) {
-        CF_WARNING(qtermwidgetLogger) << "Can't open a pseudo teletype";
+        LM_WARNING(qtermwidgetLogger) << "Can't open a pseudo teletype";
         ::close(_master);
         _master = -1;
         return;
@@ -47,7 +47,7 @@ PtyProcess::PtyProcess()
     const char* name = ptsname(_master);
     _slave = name ? ::open(name, O_RDWR | O_NOCTTY | O_CLOEXEC) : -1;
     if (_slave < 0) {
-        CF_WARNING(qtermwidgetLogger) << "Can't open slave pseudo teletype";
+        LM_WARNING(qtermwidgetLogger) << "Can't open slave pseudo teletype";
         ::close(_master);
         _master = -1;
         return;
@@ -107,7 +107,7 @@ void PtyProcess::applyAttributes()
         ttmode.c_cc[VERASE] = _eraseChar;
 
     if (tcsetattr(_slave, TCSANOW, &ttmode) != 0)
-        CF_WARNING(qtermwidgetLogger) << "Unable to set terminal attributes.";
+        LM_WARNING(qtermwidgetLogger) << "Unable to set terminal attributes.";
 }
 
 void PtyProcess::setWindowSize(int lines, int columns)
@@ -140,7 +140,7 @@ bool PtyProcess::flowControlEnabled() const
         if (tcgetattr(_slave, &ttmode) == 0)
             return (ttmode.c_iflag & IXOFF) && (ttmode.c_iflag & IXON);
     }
-    CF_WARNING(qtermwidgetLogger) << "Unable to get flow control status, terminal not connected.";
+    LM_WARNING(qtermwidgetLogger) << "Unable to get flow control status, terminal not connected.";
     return false;
 }
 
@@ -288,7 +288,7 @@ bool PtyProcess::start(const std::string& program, const std::vector<std::string
 
     if (got > 0) {
         waitpid(pid, nullptr, 0);
-        CF_WARNING(qtermwidgetLogger) << "Cannot start" << program << ":" << strerror(error);
+        LM_WARNING(qtermwidgetLogger) << "Cannot start" << program << ":" << strerror(error);
         return false;
     }
 
@@ -382,7 +382,7 @@ void PtyProcess::writePending()
         if (written < 0 && errno == EINTR)
             continue;
         if (written < 0 && errno != EAGAIN) {
-            CF_WARNING(qtermwidgetLogger) << "Could not send input data to terminal process.";
+            LM_WARNING(qtermwidgetLogger) << "Could not send input data to terminal process.";
             _pending.clear();
         }
         break;

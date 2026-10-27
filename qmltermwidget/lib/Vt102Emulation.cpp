@@ -941,7 +941,7 @@ void Vt102Emulation::reportCursorPosition()
   char tmp[sz];
   const size_t r = snprintf(tmp, sz, "\033[%d;%dR",_currentScreen->getCursorY()+1,_currentScreen->getCursorX()+1);
   if (sz <= r) {
-    CF_WARNING(qtermwidgetLogger) << "Vt102Emulation::reportCursorPosition: Buffer too small";
+    LM_WARNING(qtermwidgetLogger) << "Vt102Emulation::reportCursorPosition: Buffer too small";
   }
   sendString(tmp);
 }
@@ -976,7 +976,7 @@ void Vt102Emulation::reportTerminalParms(int p)
   char tmp[sz];
   const size_t r = snprintf(tmp, sz, "\033[%d;1;1;112;112;1;0x",p); // not really true.
   if (sz <= r) {
-    CF_WARNING(qtermwidgetLogger) << "Vt102Emulation::reportTerminalParms: Buffer too small";
+    LM_WARNING(qtermwidgetLogger) << "Vt102Emulation::reportTerminalParms: Buffer too small";
   }
   sendString(tmp);
 }
@@ -1714,7 +1714,7 @@ void Vt102Emulation::reportDecodingError()
     return;
   std::u16string sequence;
   TerminalCharacterDecoder::appendWide(sequence, std::wstring(tokenBuffer, tokenBufferPos));
-  CF_DEBUG(qtermwidgetLogger) << "Undecodable sequence:" << strings::utf16ToUtf8(sequence);
+  LM_DEBUG(qtermwidgetLogger) << "Undecodable sequence:" << strings::utf16ToUtf8(sequence);
 }
 
 //#include "Vt102Emulation.moc"

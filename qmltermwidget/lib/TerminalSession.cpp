@@ -243,7 +243,7 @@ void TerminalSession::startShellProgram()
         if (exec.empty() || !exists(exec))
             exec = userShell();
         if (exec.empty() || !exists(exec)) {
-            CF_WARNING(qtermwidgetLogger) << "Neither default shell nor the user's shell is a correct path. Fallback to"
+            LM_WARNING(qtermwidgetLogger) << "Neither default shell nor the user's shell is a correct path. Fallback to"
                                           << defaultShell;
             exec = defaultShell;
         }
@@ -273,7 +273,7 @@ void TerminalSession::startShellProgram()
     environment.push_back("COLORTERM=truecolor");
 
     if (!_shellProcess->start(exec, arguments, environment, unset, {"LANGUAGE="})) {
-        CF_DEBUG(qtermwidgetLogger) << "CRASHED! result: -1";
+        LM_DEBUG(qtermwidgetLogger) << "CRASHED! result: -1";
         return;
     }
 
@@ -553,11 +553,11 @@ void TerminalSession::close()
         if (sendSignal(SIGHUP))
             return;
 
-        CF_WARNING(qtermwidgetLogger) << "Process " << processId() << " did not die with SIGHUP";
+        LM_WARNING(qtermwidgetLogger) << "Process " << processId() << " did not die with SIGHUP";
         _shellProcess->closePty();
         if (!_shellProcess->waitForFinished(1000)) {
             if (!sendSignal(SIGKILL)) {
-                CF_WARNING(qtermwidgetLogger) << "Process " << processId() << " did not die with SIGKILL";
+                LM_WARNING(qtermwidgetLogger) << "Process " << processId() << " did not die with SIGKILL";
                 if (!_destroying)
                     _finishedLater.start(std::chrono::milliseconds(1));
             }
